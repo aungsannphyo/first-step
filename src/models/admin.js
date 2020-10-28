@@ -36,6 +36,12 @@ const adminSchema = new mongoose.Schema(
   }
 );
 
+adminSchema.virtual("blogs", {
+  ref: "Blog",
+  localField: "_id",
+  foreignField: "owner",
+})
+
 //hide data when response json
 adminSchema.methods.toJSON = function () {
   const admin = this;

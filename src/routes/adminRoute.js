@@ -44,6 +44,9 @@ router.patch(
 // get => /profile
 router.get("/profile", auth, adminController.profile);
 
+//get => /blogs
+router.get("/blogs", auth, adminController.blogs)
+
 //make seeder
 router.post("/seeder", adminController.seeder);
 
