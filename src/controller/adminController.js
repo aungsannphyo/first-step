@@ -1,4 +1,5 @@
 const Admin = require("../models/admin");
+const bcrypt = require("bcryptjs");
 
 //register controller
 exports.register = async (req, res, next) => {
@@ -39,10 +40,11 @@ exports.login = async (req, res, next) => {
 };
 
 //change password controller
-exports.changePassword = async (req, res, next) => {
+exports.changePassword = async (req, res) => {
   //check allow  update request
   const updates = Object.keys(req.body);
-  const allowUpdates = ["password", "passwordConfirmation"];
+
+  const allowUpdates = ["password", "oldPassword", "passwordConfirmation"];
   const isValidOperation = updates.every((update) =>
     allowUpdates.includes(update)
   );
@@ -53,7 +55,17 @@ exports.changePassword = async (req, res, next) => {
   }
 
   try {
-    req.admin[updates[0]] = req.body[updates[0]];
+    //verify password bcrypt
+    const isMatch = await bcrypt.compare(
+      req.body[updates[0]],
+      req.admin.password
+    );
+
+    //check old password
+    if (!isMatch) {
+      return res.status(403).send({ error: "The old password does not match" });
+    }
+    req.admin[updates[1]] = req.body[updates[1]];
     await req.admin.save();
     res.status(200).send({ data: "Successful updated" });
   } catch (err) {
