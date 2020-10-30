@@ -42,7 +42,7 @@ exports.login = async (req, res, next) => {
 exports.changePassword = async (req, res, next) => {
   //check allow  update request
   const updates = Object.keys(req.body);
-  const allowUpdates = ["password", "password-confirmation"];
+  const allowUpdates = ["password", "passwordConfirmation"];
   const isValidOperation = updates.every((update) =>
     allowUpdates.includes(update)
   );

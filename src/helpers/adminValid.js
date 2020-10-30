@@ -17,7 +17,7 @@ const password = body(
     return true;
   });
 const passwordConfirmation = body(
-  "password-confirmation",
+  "passwordConfirmation",
   "Please enter a password-confirmation at least 6 characters"
 )
   .isLength({ min: 6 })
