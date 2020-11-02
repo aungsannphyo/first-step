@@ -113,6 +113,7 @@ exports.blogs = async (req, res) => {
         options: {
           limit: parseInt(item_per_page),
           skip: parseInt((page - 1) * item_per_page),
+          sort: { createdAt: -1 },
         },
       })
       .execPopulate();
