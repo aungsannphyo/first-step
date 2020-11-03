@@ -1,5 +1,6 @@
 const Admin = require("../models/admin");
 const bcrypt = require("bcryptjs");
+const Blog = require("../models/blog");
 
 //register controller
 exports.register = async (req, res, next) => {
@@ -103,7 +104,7 @@ exports.profile = async (req, res, next) => {
 
 //blogs
 exports.blogs = async (req, res) => {
-  const item_per_page = 10;
+  const item_per_page = 5;
   const page = parseInt(req.query.page);
 
   try {
@@ -118,7 +119,8 @@ exports.blogs = async (req, res) => {
       })
       .execPopulate();
 
-    const totalItems = req.admin.blogs.length;
+    const blogs = await Blog.find({ owner: req.admin._id });
+    const totalItems = blogs.length;
 
     //make paginatin meta data
     let meta = {
