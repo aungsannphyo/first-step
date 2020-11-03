@@ -106,12 +106,12 @@ exports.update = async (req, res) => {
 
   //check if invalid update request
   if (!isValidOperation) {
-    res.status(400).send({ erro: "Invalid updates request" });
+    res.status(400).send({ error: "Invalid updates request" });
   }
 
   try {
     //find and update
-    const blog = await Blog.findOneAndUpdate({
+    const blog = await Blog.findOne({
       _id: req.params.id,
       owner: req.admin.id,
     });
