@@ -48,7 +48,10 @@ router.put(
   blogValid.create,
   error,
   auth,
-  blogController.update
+  blogController.update,
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  }
 );
 
 module.exports = router;
