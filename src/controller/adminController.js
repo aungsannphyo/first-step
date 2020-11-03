@@ -104,7 +104,7 @@ exports.profile = async (req, res, next) => {
 
 //blogs
 exports.blogs = async (req, res) => {
-  const item_per_page = 5;
+  const item_per_page = 10;
   const page = parseInt(req.query.page);
 
   try {
